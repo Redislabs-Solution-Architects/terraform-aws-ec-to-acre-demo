@@ -19,7 +19,7 @@ resource "aws_elasticache_cluster" "source" {
 
 
 module "memtier" {
-    source = "/users/tobyferguson/Development/terraform_aws_memtier_benchmark"
+    source = "github.com/Redislabs-Solution-Architects/terraform_aws_memtier_benchmark"
     region = var.region
     linux_ami = var.linux_ami
     instance_type = var.instance_type
