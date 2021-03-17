@@ -15,3 +15,7 @@ output "elasticache_node" {
     value = local.ec_node
     description = "elasticache node details"
 }
+
+output "redisgeek_config" {
+    value = module.acre.redisgeek_config
+}
