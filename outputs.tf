@@ -7,7 +7,7 @@ locals {
 }
 
 output "run_riot" {
-    value = "ssh -i ~/.ssh/${var.ssh_key_name}.pem ${module.riot.user}@${module.riot.host} '${module.riot.program} -h ${local.ec_node.address} -p ${local.ec_node.port}  replicate -h ${local.acre_fqdn} -p ${local.acre_port} --idle-timeout 60000 --live --tls --no-verify-peer -a PASSWORD'"
+    value = "ssh -i ~/.ssh/${var.ssh_key_name}.pem ${module.riot.user}@${module.riot.host} '${module.riot.program} -h ${local.ec_node.address} -p ${local.ec_node.port}  replicate -h ${local.acre_fqdn} -p ${local.acre_port} --idle-timeout 10000 --live --tls --no-verify-peer -a PASSWORD'"
     description = "command to run riot - need to paste in value for PASSWORD from redis_insight-Password"
 }
 
