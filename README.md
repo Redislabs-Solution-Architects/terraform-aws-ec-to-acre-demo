@@ -104,8 +104,9 @@ terraform destroy
 
 # Issues
 - [Issue 14420] prevents us from automating retrieval of the ACRE DB password
-
-
+- Requires user to have already setup a default VPC and a subnet. 
+- Security Group requires ssh access by user, access from EC2 instances to Elasticache, and egress
+- Minimal permissions to run this template are not specified
 
 [Elasticache]: https://aws.amazon.com/elasticache/
 [RIOT]: https://developer.redislabs.com/riot/riot-redis.html
