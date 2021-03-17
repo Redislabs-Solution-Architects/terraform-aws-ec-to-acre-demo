@@ -5,13 +5,33 @@ This module provides a simple, end to end demonstration of the process.
 # Architecture
 The system architecture is shown below:
 
-![System Architecture](http://www.plantuml.com/plantuml/png/JP2nQiGm38PtFuN8VZTalE6uu-ZGgN1qBugiYqrZkyZAqj1thnKyP0dHRttwX6vLKNHDYyl5CmnCuqK5Nwz8C7DcGIqo05RG6JOdJ8fvNXWI9uqiNnDd2WdbsthIvFvSdoJiOuLQLY46FmsRywWuOMNW1Qj6GWfi55EdkZ_5kMbZoH1ArLsUmj7zVF_uj5HYKKCTBMNrWB-hC6nzqdsl7YOPu4ZV7yytev646zruYaBjeTPm-1rTck0ayNIr1Li0v_NdVBKxN60SBHbxbCAUCFN-VIzdNsZLxhbnzktA_m00)
+![System Architecture](http://www.plantuml.com/plantuml/png/LOynQmCn38Lt_mfnUpBSc24aX0wP2g5xqSdAsVHi5rbU6lhV6nb3sqMWXxxtdavLKRIbpUNY6IQc-Q22ztiaM3cpe1QP02le2WydJ8fvtHWI9uqixmjd2WdbmsxIuhxTS1BsiK8jJOZ1BzF3ULHSi3BmXbKZ8GKsYicet_mKLq6D9KCeLNju2d-pRzVNDrCb5ZNKqLQQ1_ngml0OJkU-NIna-jVyVBcz68qa_AIDTsc1dSJTqRhK6c3VFlT7U_a0yspAFAGKki8qxdi5PnEUMxViZrzpZMlGGNNznDctjFq0)
 
-(Diagrams produced by embedding [plantuml] URLs as images)
+(Diagram courtesy of [plantuml])
 
 The EC2 instances are identical except for the software installed. They use the same ssh key, default VPC, security group etc. etc.
 
-# Installing Demo
+You will need to use the three access points:
+- ssh-memtier: run the `memtier_benchmark` traffic generator to generate load into the elasticache databse
+- ssh-riot: run the `riot-redis` tool to migrate data from elasticache to ACRE
+- redisInsight: run [RedisInsight] to see the keys in ACRE
+
+Connection instructions for these are printed out when you run Terraform (although there is an issue which means not everything is automated, unfortunately).
+
+# Use Instructions
+## Configuration
+Create a file `terraform.tfvars` for the required input variables:
+
+An example `terraform.tfvars`:
+```
+region = "us-east-1"
+linux_ami = "ami-038f1ca1bd58a5790"
+instance_type = "t3.micro"
+ssh_key_name = "toby-kp"
+security_group_id = "sg-09b9fcd952473779f"
+```
+
+
 Create a terraform template:
 - Needs an [AWS provider] and [Azure provider], suitably configured.
 - Must reference this module thus:
