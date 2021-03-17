@@ -16,19 +16,6 @@ output "run_memtier" {
     description = "command to run memtier against the elasticache instance"
 }
 
-output "elasticache_node" {
-    value = local.ec_node
-    description = "elasticache node details"
-}
-
-output "acre_details" {
-    value = module.acre.redisgeek_config
-}
-
-output "acre_cluster_endpoint" {
-    value = "${local.acre_host}.${local.acre_location}.redisenterprise.cache.azure.net.${local.acre_port}"
-}
-
 output "redis_insight-Host" {
     value = local.acre_fqdn
     description = "Host value for Redis Insight configuration"

@@ -16,7 +16,7 @@ You will need to use the three access points:
 - ssh-riot: run the `riot-redis` tool to migrate data from elasticache to ACRE
 - redisInsight: run [RedisInsight] to see the keys in ACRE
 
-Connection instructions for these are printed out when you run Terraform (although there is an issue which means not everything is automated, unfortunately).
+Connection instructions for these are printed out when you run Terraform (although there is an [issue](#issues) which means not everything is automated, unfortunately).
 
 # Use Instructions
 ## Setup
@@ -73,26 +73,22 @@ terraform apply
 
 
 
-After you have approved this will take around 7 to 8 minutes to complete and will spit out several outputs. The ones you care about are shown here (your actual values will differ!)
+After you have approved this will take around 15 minutes to complete and will spit out several outputs as shown here (your actual values will differ!):
 
 ```
 redis_insight-Host = "redisgeek-7l0j.eastus.redisenterprise.cache.azure.net"
-
 redis_insight-Password = "Value must be retrieved by going to Azure Resource Manager, searching for redisgeek-7l0j and selecting the 'Access Keys'}"
-
 redis_insight-Port = 10000
-
 run_memtier = "ssh -i ~/.ssh/toby-kp.pem ec2-user@44.192.49.207 '/usr/local/bin/memtier_benchmark -s source.m5xbzg.0001.use1.cache.amazonaws.com -p 6379'"
-
 run_riot = "ssh -i ~/.ssh/toby-kp.pem ec2-user@3.237.20.67 '/usr/local/bin/riot-redis -h source.m5xbzg.0001.use1.cache.amazonaws.com -p 6379  replicate -h redisgeek-7l0j.eastus.redisenterprise.cache.azure.net -p 10000 --idle-timeout 10000 --live --tls --no-verify-peer -a PASSWORD'"
 ```
 
-Note that the `redis_insight_Password` is a string containing instructions for how to obtain the password you'll need to access the ACRE DB.
+(Note that the `ssh` strings include single quotes `'` - you'll need these to avoid shell parsing issues, so make sure you cut/paste correctly!)
 
 ## Operation
-Use the `redis_insight_*` outputs to add the ACRE DB to [RedisInsight] 
+Use the `redis_insight_*` outputs to add the ACRE DB to [RedisInsight]. Note that the `redis_insight_Password` is a string containing instructions for how to obtain the password you'll need to access the ACRE DB, and which you'll need for both [RedisInsight] as well as to replace the `PASSWORD` value in the `run_riot` string.
 
-Then use the command strings for `run_memtier` and `run_riot` in separate terminals to pump data into the EC database and have RIOT copy that live to the ACRE DB.
+Then use the command strings for `run_memtier` and `run_riot` in separate terminals to pump data into the EC database and have RIOT copy that live to the ACRE DB. (Remember: replace `PASSWORD` with the ACRE password you obtained above!).
 
 You should see the keys etc in [RedisInsight]
 
